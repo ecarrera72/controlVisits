@@ -1,21 +1,24 @@
 <div class="container p-4">
     <div class="row">
         <div class="col-md-4 mx-auto">
-            <div class="card">
-                <div class="car-body">
-                    <form action="/links/add" method="POST">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h1>SignUp</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/signup" method="POST">
                         <div class="form-group p-1">
-                            <input type="text" class="form-control" name="title" placeholder="Title" autofocus>
+                            <input type="text" name="fullname" placeholder="Fullname" class="form-control" autofocus>
                         </div>
                         <div class="form-group p-1">
-                            <input type="url" class="form-control" name="url" placeholder="URL">
+                            <input type="text" name="username" placeholder="Username" class="form-control">
                         </div>
                         <div class="form-group p-1">
-                            <textarea class="form-control" name="description" rows="2" placeholder="Description"></textarea>
+                            <input type="password" name="password" placeholder="Password" class="form-control">
                         </div>
                         <div class="form-group d-grid gap-2 mx-auto p-1">
                             <button class="btn btn-success">
-                                Save
+                                SignUp
                             </button>
                         </div>
                     </form>
