@@ -1,22 +1,22 @@
 <div class="container p-4">
     <div class="row">
         <div class="col-md-4 mx-auto">
-            <div class="card text-center">
-                <div class="card-header">
+            <div class="card text-center shadow p-3 mb-5 bg-body rounded">
+                {{!-- <div class="card-header shadow mb-2 bg-body rounded user-select-none border border-secondary">
                     <h1>SignIn</h1>
-                </div>
+                </div> --}}
                 <div class="card-body">
                     <img src="/img/login.png" alt="Logo" class="card-img-top mx-auto m-2 rounded-circle w-50">
                     <form action="/signin" method="POST">
                         <div class="form-group p-1">
-                            <input type="text" name="username" placeholder="Username" class="form-control">
+                            <input type="text" name="username" placeholder="Usuario" class="form-control">
                         </div>
                         <div class="form-group p-1">
-                            <input type="password" name="password" placeholder="Password" class="form-control">
+                            <input type="password" name="password" placeholder="Contraseña" class="form-control">
                         </div>
                         <div class="form-group d-grid gap-2 mx-auto p-1">
-                            <button class="btn btn-success">
-                                SignIn
+                            <button class="btn btn-primary">
+                                Entrar
                             </button>
                         </div>
                     </form>
