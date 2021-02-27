@@ -29,3 +29,10 @@ body {
         font-size: 5.5rem;
     }
 }
+
+.perfil {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
