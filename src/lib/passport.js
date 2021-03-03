@@ -2,7 +2,7 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 
-const pool = require('../database');
+const { connectiondb } = require('../database');
 const helpers = require('../lib/helpers');
 
 passport.use('local.signin', new localStrategy({
@@ -11,7 +11,7 @@ passport.use('local.signin', new localStrategy({
     passReqToCallback: true
 }, async (req, username, password, done) => {
     const encript = crypto.createHash('md5').update(password).digest('hex');
-    const rows = await pool.query('SELECT * FROM user WHERE user_ = ?', [username]);
+    const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [username]);
     if (rows.length > 0) {
         const user = rows[0];
         //const validPassword = await helpers.matchPassword(password, user.password);
@@ -48,6 +48,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser( async (id, done) => {
-    const row = await pool.query('SELECT * FROM user WHERE oid = ?', [id]);
+    const row = await (await connectiondb()).query('SELECT * FROM user WHERE oid = ?', [id]);
     done(null, row[0]);
 });
