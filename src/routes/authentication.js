@@ -4,6 +4,7 @@ const passport = require('passport');
 const { generate } = require('generate-password');
 const { connectiondb } = require('../database');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
+const { mail } = require('../service/email');
 
 router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('auth/signup');
@@ -41,15 +42,16 @@ router.get('/forgot', isNotLoggedIn, (req, res) => {
 });
 
 router.post('/forgot', isNotLoggedIn, async (req, res) => {
-    console.log(req.body);
     const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
     if (rows.length > 0) {
         const password = generate({ length: 10, numbers: true });
+        await mail();
         req.flash('success', 'Se envio contraseña al correo ' + req.body.email);
         res.redirect('/signin');
+    } else {
+        req.flash('message', 'El Usuario NO existe');
+        res.redirect('/forgot');
     }
-    req.flash('message', 'El Usuario NO existe');
-    res.redirect('/forgot');
 });
 
 module.exports = router;

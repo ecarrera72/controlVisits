@@ -9,7 +9,9 @@ const db = new sqlite.Database(join(__dirname, 'dbSqlite', 'configuration.db'), 
 const queries = {
     settingsdb: `SELECT host, user, password, database, port
                 FROM occupyDatabaseSetting as ods 
-                JOIN databaseConnectionSettings as dcs ON dcs.id = ods.idDatabaseSettings`
+                JOIN databaseConnectionSettings as dcs ON dcs.id = ods.idDatabaseSettings`,
+    
+    settingsemail: `SELECT mail, password, host, port FROM mailSettings`
 }
 
 async function dbSettings() {
@@ -21,8 +23,18 @@ async function dbSettings() {
     });
 }
 
+async function emailSettings() {
+    return new Promise((resolve, reject) => {
+        db.get(queries.settingsemail, [], (err, row) => {
+            if (err) return reject(err);
+            resolve(row);
+        });
+    });
+}
+
 module.exports = {
-    dbSettings
+    dbSettings,
+    emailSettings
 };
 
 // exports.close=function() {
