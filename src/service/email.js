@@ -29,12 +29,12 @@ async function mail() {
         }
     });
 
-    readFile(join(__dirname, '../templates/layout/layout.hbs'), async (err, data) => {
+    readFile(join(__dirname, '../templates/layout/email.html'), async (err, data) => {
         if (err) { console.error(err); }
         console.log(data);
         let message = {
             from: 'Aztek Control y Automatizacion <{$settings.mail}>',
-            to: 'ecarrera@aztektec.com.mx',
+            to: 'egarduno@aztektec.com.mx',
             subject: 'pruebas',
             text: 'Correo Aztek',
             html: data
