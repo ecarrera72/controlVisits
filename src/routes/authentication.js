@@ -45,7 +45,9 @@ router.post('/forgot', isNotLoggedIn, async (req, res) => {
     const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
     if (rows.length > 0) {
         const password = generate({ length: 10, numbers: true });
-        await mail();
+
+        await mail({ to: req.body.email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});
+
         req.flash('success', 'Se envio contraseña al correo ' + req.body.email);
         res.redirect('/signin');
     } else {

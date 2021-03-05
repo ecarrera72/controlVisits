@@ -1,14 +1,16 @@
 const { createTransport } = require('nodemailer');
-const { readFile } = require('fs');
 const { join } = require('path');
 const { emailSettings } = require('../sqlite');
+const hbs = require('nodemailer-express-handlebars');
 
 let transport = null;
 let settings = null;
+let optionsHbs = null;
 
-async function mail() {
+async function mail(message) {
     if (transport == null) {
         settings = await emailSettings();
+
         transport = createTransport({
             host: settings.host,
             port: settings.port,
@@ -18,42 +20,27 @@ async function mail() {
                 pass: settings.password
             }
         });
+
+        if (await transport.verify()) {
+            optionsHbs = {
+                viewEngine: {
+                    partialsDir: join(__dirname, '../templates/partials'),
+                    layoutsDir: join(__dirname, '../templates/layout'),
+                    extname: '.hbs'
+                },
+                extName: '.hbs',
+                viewPath: 'src/templates'
+            };
+
+            transport.use('compile', hbs( optionsHbs ));
+        }
     }
 
-    let verifyConnection = transport.verify((err, success) => {
-        if (err) {
-            console.error(err);
-            return false
-        } else {
-            return success;
-        }
-    });
-
-    readFile(join(__dirname, '../templates/layout/email.html'), async (err, data) => {
-        if (err) { console.error(err); }
-        console.log(data);
-        let message = {
-            from: 'Aztek Control y Automatizacion <{$settings.mail}>',
-            to: 'egarduno@aztektec.com.mx',
-            subject: 'pruebas',
-            text: 'Correo Aztek',
-            html: data
-        }
-
-        let info = await transport.sendMail( message );
-        console.log(info);
-    });
-
-    // let message = {
-    //     from: 'Aztek Control y Automatizacion <{$settings.mail}>',
-    //     to: 'ecarrera@aztektec.com.mx',
-    //     subject: 'pruebas',
-    //     text: 'Correo Aztek',
-    //     html: '<p>hola</p>'
-    // }
+    message.from = 'Aztek Control y Automatizacion <{$settings.mail}>'
 
     let info = await transport.sendMail( message );
     console.log(info);
+
 }
 
 module.exports = {
