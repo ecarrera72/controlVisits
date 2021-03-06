@@ -1,17 +1,17 @@
-<div class="container pt-5">
+<div class="container pt-5 animate__animated animate__fadeInUpBig shadow">
     <div class="card">
         <div class="card-header">
-            <div class="d-flex d-md-flex justify-content-around">
-                <h2 class="">Areas</h2>
-                <button id="bntAdd" class="btn btn-success me-md-2" data-toggle="modal" data-target="#myModalAdd">
+            <div class="d-flex d-md-flex bg-dark rounded justify-content-around">
+                <h2 class="text-white animate__animated animate__zoomIn animate__delay-1s py-1">Areas</h2>
+                <button id="bntAdd" class="btn btn-primary me-md-2 my-2" data-toggle="modal" data-target="#myModalAdd">
                     Nueva area
                 </button>
             </div>
         </div>
-        <div class="d-flex text-wrap table-responsive-sm px-3 table-wrapper-scroll">
-            <table class="table table-striped table-primary table-hover text-center" id="mytable">
+        <div class="d-flex text-wrap table-responsive-sm px-3 table-wrapper-scroll rounded">
+            <table class="table table-striped table-primary table-hover text-center rounded" id="mytable">
                 <thead>
-                    <tr class="table-dark">
+                    <tr class="table-dark rounded">
                         <th class="thareas">Area</th>
                         <th class="thareas">Descripcion</th>
                         <th class="thareas">Estatus</th>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="id" class="areaId">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>
             </div>
