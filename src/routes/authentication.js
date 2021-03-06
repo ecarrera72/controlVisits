@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const { generate } = require('generate-password');
+const { connectiondb } = require('../database');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
+const { mail } = require('../service/email');
 
 router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('auth/signup');
 });
 
 router.post('/signup', isNotLoggedIn, passport.authenticate('local.signup', {
-    successRedirect: '/profile',
+    successRedirect: '/index',
     failureRedirect: '/signup',
     failureFlash: true
 }));
@@ -17,15 +20,9 @@ router.get('/signin', isNotLoggedIn, (req, res) => {
     res.render('auth/signin');
 });
 
-// router.post('/signin', passport.authenticate('local.signin', {
-//     successRedirect: '/profile',
-//     failureRedirect: '/signup',
-//     failureFlash: true
-// }));
-
-router.post('/signin', isNotLoggedIn, (req, res, next) => {
+router.post('/signin', isNotLoggedIn, async (req, res, next) => {
     passport.authenticate('local.signin', {
-        successRedirect: '/profile',
+        successRedirect: '/index',
         failureRedirect: '/signin',
         failureFlash: true
     })(req, res, next);
@@ -38,6 +35,28 @@ router.get('/profile', isloggedIn, (req, res) => {
 router.get('/logout', isloggedIn, (req, res) => {
     req.logOut();
     res.redirect('/signin');
+});
+
+router.get('/forgot', isNotLoggedIn, (req, res) => {
+    res.render('auth/forgot');
+});
+
+router.post('/forgot', isNotLoggedIn, async (req, res) => {
+    const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
+    if (rows.length > 0) {
+        const password = generate({ length: 10, numbers: true });
+        const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
+
+        if (update,affectedRows == 1) {
+            await mail({ to: req.body.email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
+        }
+        
+        req.flash('success', 'Se envio contraseña al correo ' + req.body.email);
+        res.redirect('/signin');
+    } else {
+        req.flash('message', 'El Usuario NO existe');
+        res.redirect('/forgot');
+    }
 });
 
 module.exports = router;

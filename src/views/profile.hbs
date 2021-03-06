@@ -2,12 +2,57 @@
     <div class="row">
         <div class="col-md-4 mx-auto">
             <div class="card text-center">
-                <div class="card-body">
-                    <h3>Welcome {{ user.fullname }}</h3>
-                    <h3>{{ user.username }}</h3>
-                    <a href="/links" class="btn btn-primary m-4">
-                        Save you links
-                    </a>
+                <h3>{{ user.name_user }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card text-center">
+                    <div class="shadow mb-2 bg-body rounded">
+                        <h1>Perfil</h1>
+                    </div>
+                    <div class="p-2">
+                        <form class="row g-3 needs-validation">
+                            <div class="col-md-6 position-relative input-group">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                <input type="text" class="form-control" placeholder="Nombre Completo" required autofocus>
+                            </div>
+                            <div class="col-md-4 position-relative input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="Usuario" required>
+                            </div>
+                            <div class="col-md-4 position-relative input-group" for="contactEmail">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" placeholder="Email" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                            </div>
+                            <div class="col-md-4 position-relative input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" placeholder="Telefono" pattern="[0-9]{10}$" required>
+                            </div>
+                            {{!-- <div class="col-md-4 position-relative input-group">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    Cambiar Contraseña
+                                </button>
+                            </div> --}}
+                            <div class="form-check form-switch col-md-3 position-relative ms-2">
+                                <input class="form-check-input" type="checkbox" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <label>Cambiar Contraseña</label>
+                            </div>
+                            <div class="collapse col-md-4 position-relative input-group" id="collapseExample">
+                                <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
+                                <input type="password" class="form-control" placeholder="Contraseña">
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                                <button type="submit" class="btn btn-danger btn-lg">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

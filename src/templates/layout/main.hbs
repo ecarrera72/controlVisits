@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Muli', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .course {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
+        width: 700px;
+      }
+
+      .course h2 {
+        letter-spacing: 1px;
+        margin: 10px 0;
+      }
+
+      .course-preview {
+        background-color: #0099ff;
+        color: #fff;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .course-info {
+        padding: 30px;
+        position: relative;
+        width: 100%;
+        border: solid black;
+      }
+      .card-img-top {
+        margin-top: 1.5rem;
+      }
+
+      @media screen and (max-width: 600px) {
+        .course {
+          width: 100%;
+          display: block;
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+</head>
+<body>
+    {{{ body }}}
+</body>
+</html>
