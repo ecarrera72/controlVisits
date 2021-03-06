@@ -36,3 +36,22 @@ body {
     font-weight: normal;
     text-decoration: inherit;
 }
+
+.thareas {
+    border: 1px solid #fff;
+}
+
+.area-header {
+    background-color:#18456b;
+    color:white;
+}
+
+.table-wrapper-scroll {
+    overflow-y: auto;
+    max-height: 35rem;
+}
+
+.table-wrapper-scroll thead th {
+    position: sticky;
+    top: 0;
+}   

@@ -45,9 +45,12 @@ router.post('/forgot', isNotLoggedIn, async (req, res) => {
     const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
     if (rows.length > 0) {
         const password = generate({ length: 10, numbers: true });
+        const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
 
-        await mail({ to: req.body.email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});
-
+        if (update,affectedRows == 1) {
+            await mail({ to: req.body.email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
+        }
+        
         req.flash('success', 'Se envio contraseña al correo ' + req.body.email);
         res.redirect('/signin');
     } else {
