@@ -3,9 +3,11 @@ $(document).ready(function(){
     $('#mytable').on('click','.edit',function(){
         let status = $(this).data('active') ? 1 : 0;
         $('#EditModal').modal('show');
-        $('.areaDescription').val( $(this).data('description') );
-        $('.areaId').val( $(this).data('id') );
-        $('.areaActive').val( status );
+        $('.userId').val( $(this).data('id') );
+        $('.userName').val( $(this).data('name') );
+        $('.user').val( $(this).data('user') );
+        $('.userActive').val( status );
+        $('.typeUser').val( $(this).data('typeId') );
     });
 
     $('#bntAdd').on('click', '', () => { $('.areaDescription').val(''); });

@@ -52,6 +52,8 @@ async function main() {
     app.use(require('./routes/index'));
     app.use(require('./routes/authentication'));
     app.use('/catalogs/area', require('./routes/catalogs/area'));
+    app.use('/catalogs/document', require('./routes/catalogs/document'));
+    app.use('/catalogs/user', require('./routes/catalogs/user'));
 
     // Public
     app.use(express.static(path.join(__dirname, 'public')));

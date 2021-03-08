@@ -2,9 +2,9 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex d-md-flex bg-dark rounded justify-content-around">
-                <h2 class="text-white animate__animated animate__zoomIn animate__delay-1s py-1">Areas</h2>
+                <h2 class="text-white animate__animated animate__zoomIn animate__delay-1s py-1">Usuarios</h2>
                 <button id="bntAdd" class="btn btn-primary me-md-2 my-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">
-                    Nueva area
+                    Nuevo usuario
                 </button>
             </div>
         </div>
@@ -12,9 +12,11 @@
             <table class="table table-striped table-primary table-hover text-center rounded" id="mytable">
                 <thead>
                     <tr class="table-dark rounded">
-                        <th class="thareas">Area</th>
-                        <th class="thareas">Descripcion</th>
+                        <th class="thareas">#</th>
+                        <th class="thareas">Nombre</th>
+                        <th class="thareas">Usuario</th>
                         <th class="thareas">Estatus</th>
+                        <th class="thareas">Tipo Usuario</th>
                         <th class="thareas">Accion</th>
                     </tr>
                 </thead>
@@ -22,19 +24,27 @@
                     {{#each rows}}
                         <tr>
                             <td>{{ oid }}</td>
-                            <td>{{ description }}</td>
+                            <td>{{ name_user }}</td>
+                            <td>{{ user_ }}</td>
                             <td>
                                 <div class="form-switch">
                                     {{#if status}}    
-                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" data-description="{{ description }}" aria-expanded="false" checked>
+                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" 
+                                            data-name="{{ name_user }}" data-user="{{ user_ }}" data-active="{{ active }}" 
+                                            data-typeId="{{ user_type_oid }}" aria-expanded="false" checked>
                                     {{else}}
-                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" data-description="{{ description }}" aria-expanded="false">
+                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" 
+                                            data-name="{{ name_user }}" data-user="{{ user_ }}" data-active="{{ active }}" 
+                                            data-typeId="{{ user_type_oid }}" aria-expanded="false">
                                     {{/if}}
                                     <label>{{ active }}</label>
                                 </div>
                             </td>
+                            <td>{{ description }}</td>
                             <td> 
-                                <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm edit" data-id="{{ oid }}" data-description="{{ description }}" data-active="{{ active }}">Editar</a>
+                                <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm edit" 
+                                    data-id="{{ oid }}" data-name="{{ name_user }}" data-user="{{ user_ }}" 
+                                    data-active="{{ active }}" data-typeId="{{ user_type_oid }}">Editar</a>
                             </td>
                         </tr>
                     {{/each}}
@@ -44,17 +54,22 @@
     </div>
 </div>
 
-<!-- Modal Add Product-->
 <form action="/catalogs/area/save" method="post">
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header area-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Agregar Area</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Agregar usuario</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" name="description" class="form-control areaDescription" placeholder="Nueva Area" required>
+                    <div class="form-group p-1">
+                        <input type="text" name="name_user" class="form-control userName" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group p-1">
+                        <input type="text" name="user_" class="form-control user" placeholder="Usuario" required>
+                    </div>
+                    <div class="form-group p-1">
+                        <input type="text" name="type_user" class="form-control typeUser" placeholder="Tipo usuario" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -75,13 +90,19 @@
                     <h4 class="modal-title" id="exampleModalLabel">Editar Area</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" name="description" class="form-control areaDescription" placeholder="Area" required>
+                    <div class="form-group p-1">
+                        <input type="text" name="name_user" class="form-control userName" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group p-1">
+                        <input type="text" name="user_" class="form-control user" placeholder="Usuario" required>
+                    </div>
+                    <div class="form-group p-1">
+                        <input type="text" name="type_user" class="form-control typeUser" placeholder="Tipo usuario" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="id" class="areaId">
-                    <input type="hidden" name="active" class="areaActive">
+                    <input type="hidden" name="id" class="userId">
+                    <input type="hidden" name="active" class="userActive">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary" id="updateArea">Actualizar</button>
                 </div>
@@ -91,4 +112,4 @@
 </form>
 
 <script src="/jquery/dist/jquery.min.js"></script>
-<script src="/js/catalogs/catArea.js"></script>
+<script src="/js/catalogs/catUser.js"></script>

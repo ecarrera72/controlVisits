@@ -29,7 +29,10 @@ router.post('/save', isloggedIn, async (req, res) => {
 });
 
 router.post('/update', isloggedIn, async (req, res) => {
-    const insert = { description: req.body.description }
+    const insert = { 
+        description: req.body.description,
+        active: req.body.active
+    }
     const rows = await (await connectiondb()).query('UPDATE area SET ? WHERE oid = ?', [insert, req.body.id]);
 
     if (rows.affectedRows > 0) req.flash('success', 'Area actualizada correctamente.');

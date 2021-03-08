@@ -22,7 +22,7 @@ $(document).ready(function(){
             active: status == 'Activo' ? 1 : 0
         }
 
-        $.post( '/catalogs/area/update', data);
+        $.post( '/catalogs/document/update', data);
     });
 
 });
