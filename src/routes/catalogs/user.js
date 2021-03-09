@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const { connectiondb } = require('../../database');
 const { isloggedIn } = require('../../lib/auth');
 
 router.get('/', isloggedIn, async (req, res) => {
     const rows = await (await connectiondb()).query(`SELECT u.oid, name_user, user_, u.active, user_type_oid, description
                                                     FROM user as u JOIN user_type as ut ON user_type_oid = ut.oid`);
+    
+    const selected = await (await connectiondb()).query(`SELECT * FROM user_type WHERE active = 1`);
     rows.forEach( row => { 
         if (row.active == 1) { 
             row.active = 'Activo';
@@ -16,28 +19,37 @@ router.get('/', isloggedIn, async (req, res) => {
             row.status = false;
         }
     })
-    res.render('catalogs/user', { rows });
+    res.render('catalogs/user', { rows, selected });
 });
 
 router.post('/save', isloggedIn, async (req, res) => {
-    const insert = { description: req.body.description, active: 1 }
-    const rows = await (await connectiondb()).query('INSERT INTO document_type SET ?', [insert]);
+    const encript = crypto.createHash('md5').update(req.body.password).digest('hex');
+    const insert = { 
+        name_user: req.body.name_user,
+        user_: req.body.user_,
+        password: encript,
+        active: 1,
+        user_type_oid: req.body.user_type_oid
+    }
+    const rows = await (await connectiondb()).query('INSERT INTO user SET ?', [insert]);
 
-    if (rows.affectedRows > 0) req.flash('success', 'Tipo de documento agregado correctamente.');
-    else req.flash('success', 'Erro al intertar agregar el tipo de documento.');
+    if (rows.affectedRows > 0) req.flash('success', 'Usuario agregado correctamente.');
+    else req.flash('success', 'Erro al intertar agregar el usuario.');
 
-    res.redirect('/catalogs/document')
+    res.redirect('/catalogs/user')
 });
 
 router.post('/update', isloggedIn, async (req, res) => {
-    const insert = { 
-        description: req.body.description,
-        active: req.body.active
+    const update = { 
+        name_user: req.body.name_user,
+        user_: req.body.user_,
+        active: req.body.active,
+        user_type_oid: req.body.user_type_oid
     }
-    const rows = await (await connectiondb()).query('UPDATE document_type SET ? WHERE oid = ?', [insert, req.body.id]);
+    const rows = await (await connectiondb()).query('UPDATE user SET ? WHERE oid = ?', [update, req.body.id]);
 
-    if (rows.affectedRows > 0) req.flash('success', 'Tipo documento actualizado correctamente.');
-    else req.flash('success', 'Erro al intertar actualizar el tipo de documento.');
+    if (rows.affectedRows > 0) req.flash('success', 'Usuario actualizado correctamente.');
+    else req.flash('success', 'Erro al intertar actualizar al usurio.');
 
     res.redirect('/catalogs/document')
 });

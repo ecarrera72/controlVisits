@@ -7,7 +7,7 @@ $(document).ready(function(){
         $('.userName').val( $(this).data('name') );
         $('.user').val( $(this).data('user') );
         $('.userActive').val( status );
-        $('.typeUser').val( $(this).data('typeId') );
+        $('.typeUser').val( $(this).data('typeiduser') );
     });
 
     $('#bntAdd').on('click', '', () => { $('.areaDescription').val(''); });
@@ -20,11 +20,13 @@ $(document).ready(function(){
 
         let data = {
             id: $(this).data('id'),
-            description: $(this).data('description'),
-            active: status == 'Activo' ? 1 : 0
+            name_user: $(this).data('name'),
+            user_: $(this).data('user'),
+            active: status == 'Activo' ? 1 : 0,
+            user_type_oid: $(this).data('typeiduser')
         }
 
-        $.post( '/catalogs/area/update', data);
+        $.post( '/catalogs/user/update', data);
     });
 
 });
