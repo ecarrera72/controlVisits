@@ -19,11 +19,19 @@ router.get('/', isloggedIn, async (req, res) => {
 });
 
 router.post('/save', isloggedIn, async (req, res) => {
-    const insert = { description: req.body.description, active: 1 }
-    const rows = await (await connectiondb()).query('INSERT INTO document_type SET ?', [insert]);
+    const insert = { description: req.body.description, active: 1 }   
 
-    if (rows.affectedRows > 0) req.flash('success', 'Tipo de documento agregado correctamente.');
-    else req.flash('success', 'Erro al intertar agregar el tipo de documento.');
+    try {
+        const rows = await (await connectiondb()).query('INSERT INTO document_type SET ?', [insert]);
+        if (rows.affectedRows > 0) req.flash('success', 'Tipo de documento agregado correctamente.');
+    } catch (error) {
+        if (error.errno == 1062) {
+            req.flash('message', 'Erro: el tipo de cocumento ya existe.');
+        }else {
+            console.error(error);
+            req.flash('message', 'Erro al intertar agregar el tipo de documento.');
+        }
+    }
 
     res.redirect('/catalogs/document')
 });

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const crypto = require('crypto');
 const { generate } = require('generate-password');
 const { connectiondb } = require('../database');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
@@ -29,7 +30,23 @@ router.post('/signin', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.get('/profile', isloggedIn, (req, res) => {
+    console.log(req.user);
     res.render('profile');
+});
+
+router.post('/profile', isloggedIn, async (req, res) => {
+    if (req.body.password !== '') {
+        req.body.password = crypto.createHash('md5').update(req.body.password).digest('hex');
+    }
+    const update = await (await connectiondb()).query('UPDATE user SET ? WHERE oid = ?', [req.body, req.user.oid]);
+
+    if (update.affectedRows == 1) {
+        req.flash('success', 'Se actualizo usuario correctamente.');
+        res.redirect('/');
+    } else {
+        req.flash('message', 'Error al actualizar el usuario');
+        res.redirect('/profile');
+    }
 });
 
 router.get('/logout', isloggedIn, (req, res) => {
@@ -47,7 +64,7 @@ router.post('/forgot', isNotLoggedIn, async (req, res) => {
         const password = generate({ length: 10, numbers: true });
         const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
 
-        if (update,affectedRows == 1) {
+        if (update.affectedRows == 1) {
             await mail({ to: req.body.email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
         }
         

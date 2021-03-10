@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex d-md-flex bg-dark rounded justify-content-around">
-                <h2 class="text-white animate__animated animate__zoomIn animate__delay-1s py-1">Tipos de Dcocumentos</h2>
+                <h2 class="text-white animate__animated animate__zoomIn animate__delay-1s py-1">Tipo de Documento</h2>
                 <button id="bntAdd" class="btn btn-primary me-md-2 my-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">
                     Nuevo documento
                 </button>
@@ -12,7 +12,6 @@
             <table class="table table-striped table-primary table-hover text-center rounded" id="mytable">
                 <thead>
                     <tr class="table-dark rounded">
-                        <th class="thareas">Documento</th>
                         <th class="thareas">Descripcion</th>
                         <th class="thareas">Estatus</th>
                         <th class="thareas">Accion</th>
@@ -21,7 +20,6 @@
                 <tbody>
                     {{#each rows}}
                         <tr>
-                            <td>{{ oid }}</td>
                             <td>{{ description }}</td>
                             <td>
                                 <div class="form-switch">
@@ -45,7 +43,7 @@
 </div>
 
 <!-- Modal Add Product-->
-<form action="/catalogs/document/save" method="post">
+<form action="/catalogs/document/save" method="post" id="formAdd">
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

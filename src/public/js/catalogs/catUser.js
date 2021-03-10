@@ -10,7 +10,7 @@ $(document).ready(function(){
         $('.typeUser').val( $(this).data('typeiduser') );
     });
 
-    $('#bntAdd').on('click', '', () => { $('.areaDescription').val(''); });
+    $('#bntAdd').on('click', '', () => { $('#formAdd').trigger('reset'); });
 
     $('#mytable').on('change', '.check', function(){
         let status = $(this).is(':checked') ? 'Activo' : 'Inactivo';
@@ -22,6 +22,7 @@ $(document).ready(function(){
             id: $(this).data('id'),
             name_user: $(this).data('name'),
             user_: $(this).data('user'),
+            password: '',
             active: status == 'Activo' ? 1 : 0,
             user_type_oid: $(this).data('typeiduser')
         }
@@ -29,4 +30,9 @@ $(document).ready(function(){
         $.post( '/catalogs/user/update', data);
     });
 
+    $('#checkPassUpd').on('change', '', function(){
+        let val = false
+        $(this).is(':checked') ? val = true : $('.passwd').val('');
+        $('.passwd').prop('required', val);
+    });
 });

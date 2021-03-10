@@ -8,7 +8,7 @@ $(document).ready(function(){
         $('.areaActive').val( status );
     });
 
-    $('#bntAdd').on('click', '', () => { $('.areaDescription').val(''); });
+    $('#bntAdd').on('click', '', () => { $('#formAdd').trigger('reset'); });
 
     $('#mytable').on('change', '.check', function(){
         let status = $(this).is(':checked') ? 'Activo' : 'Inactivo';

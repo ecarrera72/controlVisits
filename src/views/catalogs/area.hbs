@@ -12,7 +12,6 @@
             <table class="table table-striped table-primary table-hover text-center rounded" id="mytable">
                 <thead>
                     <tr class="table-dark rounded">
-                        <th class="thareas">Area</th>
                         <th class="thareas">Descripcion</th>
                         <th class="thareas">Estatus</th>
                         <th class="thareas">Accion</th>
@@ -21,7 +20,6 @@
                 <tbody>
                     {{#each rows}}
                         <tr>
-                            <td>{{ oid }}</td>
                             <td>{{ description }}</td>
                             <td>
                                 <div class="form-switch">
@@ -45,7 +43,7 @@
 </div>
 
 <!-- Modal Add Product-->
-<form action="/catalogs/area/save" method="post">
+<form action="/catalogs/area/save" method="post" id="formAdd">
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

@@ -31,10 +31,18 @@ router.post('/save', isloggedIn, async (req, res) => {
         active: 1,
         user_type_oid: req.body.user_type_oid
     }
-    const rows = await (await connectiondb()).query('INSERT INTO user SET ?', [insert]);
 
-    if (rows.affectedRows > 0) req.flash('success', 'Usuario agregado correctamente.');
-    else req.flash('success', 'Erro al intertar agregar el usuario.');
+    try {
+        const rows = await (await connectiondb()).query('INSERT INTO user SET ?', [insert]);
+        if (rows.affectedRows > 0) req.flash('success', 'Usuario agregado correctamente.');
+    } catch (error) {
+        if (error.errno == 1062) {
+            req.flash('message', 'Erro: el usuario ya existe.');
+        }else {
+            console.error(error);
+            req.flash('message', 'Erro al intertar agregar el usuario.');
+        }
+    }    
 
     res.redirect('/catalogs/user')
 });
@@ -46,12 +54,17 @@ router.post('/update', isloggedIn, async (req, res) => {
         active: req.body.active,
         user_type_oid: req.body.user_type_oid
     }
+
+    if (req.body.password !== '') {
+        update.password = crypto.createHash('md5').update(req.body.password).digest('hex');
+    }
+
     const rows = await (await connectiondb()).query('UPDATE user SET ? WHERE oid = ?', [update, req.body.id]);
 
     if (rows.affectedRows > 0) req.flash('success', 'Usuario actualizado correctamente.');
     else req.flash('success', 'Erro al intertar actualizar al usurio.');
 
-    res.redirect('/catalogs/document')
+    res.redirect('/catalogs/user')
 });
 
 module.exports = router;
