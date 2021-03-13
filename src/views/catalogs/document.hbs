@@ -23,11 +23,9 @@
                             <td>{{ description }}</td>
                             <td>
                                 <div class="form-switch">
-                                    {{#if status}}    
-                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" data-description="{{ description }}" aria-expanded="false" checked>
-                                    {{else}}
-                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" data-description="{{ description }}" aria-expanded="false">
-                                    {{/if}}
+                                    <input class="form-check-input check" type="checkbox" data-id="{{ oid }}"
+                                        data-description="{{ description }}" aria-expanded="false"
+                                        {{#if status}} checked {{/if}}>                                    
                                     <label>{{ active }}</label>
                                 </div>
                             </td>

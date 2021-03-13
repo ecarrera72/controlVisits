@@ -8,6 +8,7 @@ $(document).ready(function(){
         $('.user').val( $(this).data('user') );
         $('.userActive').val( status );
         $('.typeUser').val( $(this).data('typeiduser') );
+        $('.email').val( $(this).data('email') );
     });
 
     $('#bntAdd').on('click', '', () => { $('#formAdd').trigger('reset'); });
@@ -24,7 +25,8 @@ $(document).ready(function(){
             user_: $(this).data('user'),
             password: '',
             active: status == 'Activo' ? 1 : 0,
-            user_type_oid: $(this).data('typeiduser')
+            user_type_oid: $(this).data('typeiduser'),
+            user_email: $(this).data('email')
         }
 
         $.post( '/catalogs/user/update', data);

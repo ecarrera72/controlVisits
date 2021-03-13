@@ -5,8 +5,8 @@ const { connectiondb } = require('../../database');
 const { isloggedIn } = require('../../lib/auth');
 
 router.get('/', isloggedIn, async (req, res) => {
-    const rows = await (await connectiondb()).query(`SELECT u.oid, name_user, user_, u.active, user_type_oid, description
-                                                    FROM user as u JOIN user_type as ut ON user_type_oid = ut.oid`);
+    const rows = await (await connectiondb()).query(`SELECT u.oid, name_user, user_, u.active, user_type_oid, user_email, 
+                                                    description FROM user as u JOIN user_type as ut ON user_type_oid = ut.oid`);
     
     const selected = await (await connectiondb()).query(`SELECT * FROM user_type WHERE active = 1`);
     rows.forEach( row => { 
@@ -29,7 +29,8 @@ router.post('/save', isloggedIn, async (req, res) => {
         user_: req.body.user_,
         password: encript,
         active: 1,
-        user_type_oid: req.body.user_type_oid
+        user_type_oid: req.body.user_type_oid,
+        user_email: req.body.user_email
     }
 
     try {
@@ -52,7 +53,8 @@ router.post('/update', isloggedIn, async (req, res) => {
         name_user: req.body.name_user,
         user_: req.body.user_,
         active: req.body.active,
-        user_type_oid: req.body.user_type_oid
+        user_type_oid: req.body.user_type_oid,
+        user_email: req.body.user_email
     }
 
     if (req.body.password !== '') {

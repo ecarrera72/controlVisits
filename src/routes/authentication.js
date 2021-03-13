@@ -30,7 +30,6 @@ router.post('/signin', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.get('/profile', isloggedIn, (req, res) => {
-    console.log(req.user);
     res.render('profile');
 });
 
@@ -64,11 +63,11 @@ router.post('/forgot', isNotLoggedIn, async (req, res) => {
         const password = generate({ length: 10, numbers: true });
         const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
 
-        if (update.affectedRows == 1) {
-            await mail({ to: req.body.email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
+        if (update.affectedRows == 1 ) {
+            await mail({ to: rows[0].user_email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
         }
         
-        req.flash('success', 'Se envio contraseña al correo ' + req.body.email);
+        req.flash('success', 'Se envio contraseña al correo registrado');
         res.redirect('/signin');
     } else {
         req.flash('message', 'El Usuario NO existe');

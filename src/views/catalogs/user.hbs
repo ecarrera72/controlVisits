@@ -14,8 +14,9 @@
                     <tr class="table-dark rounded">
                         <th class="thareas">Nombre</th>
                         <th class="thareas">Usuario</th>
-                        <th class="thareas">Estatus</th>
                         <th class="thareas">Tipo Usuario</th>
+                        <th class="thareas">Correo</th>
+                        <th class="thareas">Estatus</th>
                         <th class="thareas">Accion</th>
                     </tr>
                 </thead>
@@ -24,25 +25,23 @@
                         <tr>
                             <td>{{ name_user }}</td>
                             <td>{{ user_ }}</td>
+                            <td>{{ description }}</td>
+                            <td>{{ user_email }}</td>
                             <td>
-                                <div class="form-switch">
-                                    {{#if status}}    
-                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" 
-                                            data-name="{{ name_user }}" data-user="{{ user_ }}" data-active="{{ active }}" 
-                                            data-typeiduser="{{ user_type_oid }}" aria-expanded="false" checked>
-                                    {{else}}
-                                        <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" 
-                                            data-name="{{ name_user }}" data-user="{{ user_ }}" data-active="{{ active }}" 
-                                            data-typeiduser="{{ user_type_oid }}" aria-expanded="false">
-                                    {{/if}}
+                                <div class="form-switch">    
+                                    <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" 
+                                        data-name="{{ name_user }}" data-user="{{ user_ }}" data-active="{{ active }}" 
+                                        data-typeiduser="{{ user_type_oid }}" data-email="{{ user_email }}"
+                                        aria-expanded="false" {{#if status}} checked {{/if}}>
+                                    
                                     <label>{{ active }}</label>
                                 </div>
                             </td>
-                            <td>{{ description }}</td>
                             <td> 
                                 <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm edit" 
                                     data-id="{{ oid }}" data-name="{{ name_user }}" data-user="{{ user_ }}" 
-                                    data-active="{{ active }}" data-typeiduser="{{ user_type_oid }}">Editar</a>
+                                    data-active="{{ active }}" data-typeiduser="{{ user_type_oid }}"
+                                    data-email="{{ user_email }}">Editar</a>
                             </td>
                         </tr>
                     {{/each}}
@@ -60,16 +59,23 @@
                     <h4 class="modal-title" id="exampleModalLabel">Agregar usuario</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group p-1">
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                         <input type="text" name="name_user" class="form-control userName" placeholder="Nombre" required>
                     </div>
-                    <div class="form-group p-1">
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                         <input type="text" name="user_" class="form-control user" placeholder="Usuario" required>
                     </div>
-                    <div class="form-group p-1">
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
                         <input type="password" name="password" class="form-control passwd" placeholder="Contraseña" required>
                     </div>
-                    <div class="form-group p-1">
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" name="user_email" class="form-control email" placeholder="Correo" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                    </div>
+                    <div class="form-group">
                         <select name="user_type_oid" class="form-select typeUser" data-show-content="true">
                             <option value="0" data-content="<i class='fab fa-whatsapp fa-lg'></i>">Selecciona un tipo de usuario</option>
                             {{#each selected}}
@@ -95,11 +101,17 @@
                     <h4 class="modal-title" id="exampleModalLabel">Editar usuario</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group p-1">
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                         <input type="text" name="name_user" class="form-control userName" placeholder="Nombre" required>
                     </div>
-                    <div class="form-group p-1">
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                         <input type="text" name="user_" class="form-control user" placeholder="Usuario" required>
+                    </div>
+                    <div class="form-group input-group pb-1">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" name="user_email" class="form-control email" placeholder="Correo" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     </div>
                     <div class="form-group p-1">
                         <select name="user_type_oid" class="form-select typeUser">
@@ -113,8 +125,9 @@
                         <input class="form-check-input" id="checkPassUpd" type="checkbox" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <label>Cambiar Contraseña</label>
                     </div>
-                    <div class="collapse form-group p-1" id="collapseExample">
-                        <input type="password" name="password" class="form-control passwd" placeholder="Contraseña">
+                    <div class="collapse input-group" id="collapseExample">
+                        <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
+                        <input type="password" class="form-control passwd" name="password" placeholder="Contraseña">
                     </div>
                 </div>
                 <div class="modal-footer">
