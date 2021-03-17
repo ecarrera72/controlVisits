@@ -8,6 +8,7 @@ const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
 const { dbSettings } = require('./sqlite');
 
+
 // Initializations
 const app = express();
 
@@ -27,11 +28,17 @@ async function main() {
     app.set('view engine', '.hbs');
 
     // Middlewares
+    // app.use(session({ 
+    //     secret: 'aztekmysql',
+    //     resave: false,
+    //     saveUninitialized: false,
+    //     store: new MySQLStore(await dbSettings())
+    // }));
     app.use(session({ 
-        secret: 'aztekmysql',
+        secret: 'secureAztek',
         resave: false,
         saveUninitialized: false,
-        store: new MySQLStore(await dbSettings())
+        cookie: { maxAge: 60000 }
     }));
     app.use(flash());
     app.use(morgan('dev'));
