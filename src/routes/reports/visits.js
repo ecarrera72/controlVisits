@@ -22,16 +22,20 @@ router.get('/info', isloggedIn, async (req, res) => {
 
     if (req.query.fromDate !== '') {
         if (req.query.fromDate !== undefined) {
-            query = query + "WHERE visit_check_date >= '" + req.query.fromDate + "'";   
+            query = query + `WHERE DATE(visit_check_date) >= '${req.query.fromDate}'`;   
         }
     }
 
     if (req.query.toDate !== '') {
         if (req.query.toDate !== undefined) {
             let operador = query.includes("WHERE") ? " AND" : "WHERE";
-            query = query + operador + " visit_exit_date <= '" + req.query.toDate + "'";
+            query = query + operador + ` DATE(visit_check_date) <= '${req.query.toDate}'`;
         }
     }
+
+    query = query + ` ORDER BY visit_check_date DESC`;
+
+    console.log(query);
 
     const rows = await (await connectiondb()).query(query);
 

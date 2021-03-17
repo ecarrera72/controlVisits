@@ -3,8 +3,24 @@ const router = express.Router();
 const crypto = require('crypto');
 const { connectiondb } = require('../../database');
 const { isloggedIn } = require('../../lib/auth');
+const { getData, postData } = require('../../service/api');
 
 router.get('/', isloggedIn, async (req, res) => {
+    const response = await getData('user/');
+
+    response.data.response.forEach(row => {
+        console.log(row);
+        if (row.active == 1) { 
+            row.active = 'Activo';
+            row.status = true;
+        } else {
+            row.active = 'Inactivo';
+            row.status = false;
+        }
+    });
+
+    //res.render('catalogs/area', { rows: response.data.response });
+
     const rows = await (await connectiondb()).query(`SELECT u.oid, name_user, user_, u.active, user_type_oid, user_email, 
                                                     description FROM user as u JOIN user_type as ut ON user_type_oid = ut.oid`);
     

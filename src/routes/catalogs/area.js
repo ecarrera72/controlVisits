@@ -1,50 +1,66 @@
 const express = require('express');
 const router = express.Router();
-const { connectiondb } = require('../../database');
+//const { connectiondb } = require('../../database');
 const { isloggedIn } = require('../../lib/auth');
+const { getData, postData } = require('../../service/api');
 
 router.get('/', isloggedIn, async (req, res) => {
-    const rows = await (await connectiondb()).query('SELECT * FROM area');
-    rows.forEach( row => { 
+    const response = await getData('area/');
+
+    response.data.response.forEach(row => {
         if (row.active == 1) { 
             row.active = 'Activo';
             row.status = true;
-        }
-        else {
+        } else {
             row.active = 'Inactivo';
             row.status = false;
         }
-    })
-    res.render('catalogs/area', { rows });
+    });
+
+    res.render('catalogs/area', { rows: response.data.response });
 });
 
 router.post('/save', isloggedIn, async (req, res) => {
-    const insert = { description: req.body.description, active: 1 }
+    const insert = { 
+        description: req.body.description, 
+        active: 1 
+    }
+
     try {
-        const rows = await (await connectiondb()).query('INSERT INTO area SET ?', [insert]);
-        if (rows.affectedRows > 0) req.flash('success', 'Area agregada correctamente.');
+        await postData('area/create/', insert)
+        req.flash('success', 'Area agregada correctamente.');
     } catch (error) {
-        if (error.errno == 1062) {
-            req.flash('message', 'Erro: el area ya existe.');
-        }else {
+        if (error.response.data.code == -1) { 
+            req.flash('message', 'Error: el area ya existe.');
+        } else {
             console.error(error);
-            req.flash('message', 'Erro al intertar agregar el area.');
+            req.flash('message', 'Error al intertar agregar el area.');
         }
     }
-    res.redirect('/catalogs/area')
+
+    res.redirect('/catalogs/area');
 });
 
 router.post('/update', isloggedIn, async (req, res) => {
-    const insert = { 
+    const update = {
+        oid: req.body.id,
         description: req.body.description,
         active: req.body.active
     }
-    const rows = await (await connectiondb()).query('UPDATE area SET ? WHERE oid = ?', [insert, req.body.id]);
 
-    if (rows.affectedRows > 0) req.flash('success', 'Area actualizada correctamente.');
-    else req.flash('success', 'Erro al intertar actualizar area.');
+    try {
+        await postData('area/create/', update)
+        req.flash('success', 'Area actualizada correctamente.');
+    } catch (error) {
+        if (error.response.data.code == -1) { 
+            req.flash('message', 'Error: el area ya existe.');
+        } else {
+            console.error(error);
+            req.flash('message', 'Error al intertar actualizar el area.');
+        }
+    }
 
-    res.redirect('/catalogs/area')
+    res.redirect('/catalogs/area');
 });
 
 module.exports = router;

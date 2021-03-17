@@ -11,7 +11,9 @@ const queries = {
                 FROM occupyDatabaseSetting as ods 
                 JOIN databaseConnectionSettings as dcs ON dcs.id = ods.idDatabaseSettings`,
     
-    settingsemail: `SELECT mail, password, host, port FROM mailSettings`
+    settingsemail: `SELECT mail, password, host, port FROM mailSettings`,
+
+    settingsApi: `SELECT host, port, path FROM apiRestSettings WHERE status = 1`
 }
 
 async function dbSettings() {
@@ -32,14 +34,17 @@ async function emailSettings() {
     });
 }
 
+async function apiSettings() {
+    return new Promise((resolve, reject) => {
+        db.get(queries.settingsApi, [], (err, row) => {
+            if (err) return reject(err);
+            resolve(row);
+        });
+    });
+}
+
 module.exports = {
     dbSettings,
-    emailSettings
+    emailSettings,
+    apiSettings
 };
-
-// exports.close=function() {
-//     return new Promise(function(resolve, reject) {
-//         this.db.close()
-//         resolve(true)
-//     }) 
-// }
