@@ -6,6 +6,7 @@ const { generate } = require('generate-password');
 const { connectiondb } = require('../database');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
 const { mail } = require('../service/email');
+const { getData, postData } = require('../service/api');
 
 router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('auth/signup');
@@ -36,14 +37,22 @@ router.get('/profile', isloggedIn, (req, res) => {
 router.post('/profile', isloggedIn, async (req, res) => {
     if (req.body.password !== '') {
         req.body.password = crypto.createHash('md5').update(req.body.password).digest('hex');
-    }
-    const update = await (await connectiondb()).query('UPDATE user SET ? WHERE oid = ?', [req.body, req.user.oid]);
-
-    if (update.affectedRows == 1) {
-        req.flash('success', 'Se actualizo usuario correctamente.');
-        res.redirect('/');
     } else {
-        req.flash('message', 'Error al actualizar el usuario');
+        req.body.password = req.body.passUser;
+    }
+
+    try {
+        await postData('user/create/', req.body)
+        req.flash('success', 'Usuario actualizado correctamente.');
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        if (error.response.data.code == -1) {
+            req.flash('message', 'Erro: el usuario ya existe.');
+        } else {
+            req.flash('success', 'Erro al intertar actualizar al usurio.');
+        }
+
         res.redirect('/profile');
     }
 });

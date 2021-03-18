@@ -13,6 +13,16 @@ async function getData(entity) {
     return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`);
 }
 
+async function getDataParams(entity, params) {
+    const resSettings = await getSetting();
+    return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}/${params}`);
+}
+
+async function getDataObject(entity, object) {
+    const resSettings = await getSetting();
+    return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`, { data: object });
+}
+
 async function postData(entity, objetc) {
     const resSettings = await getSetting();
     return await axios.post(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`, objetc);
@@ -20,5 +30,7 @@ async function postData(entity, objetc) {
 
 module.exports = {
     getData,
+    getDataParams,
+    getDataObject,
     postData
 }

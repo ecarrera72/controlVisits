@@ -37,8 +37,8 @@ async function main() {
     app.use(session({ 
         secret: 'secureAztek',
         resave: false,
-        saveUninitialized: false,
-        cookie: { maxAge: 60000 }
+        saveUninitialized: false
+        //cookie: { maxAge: 3600000 }
     }));
     app.use(flash());
     app.use(morgan('dev'));

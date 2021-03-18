@@ -23,25 +23,25 @@
                 <tbody>
                     {{#each rows}}
                         <tr>
-                            <td>{{ name_user }}</td>
-                            <td>{{ user_ }}</td>
+                            <td>{{ nameUser }}</td>
+                            <td>{{ user }}</td>
                             <td>{{ description }}</td>
-                            <td>{{ user_email }}</td>
+                            <td>{{ userEmail }}</td>
                             <td>
                                 <div class="form-switch">    
                                     <input class="form-check-input check" type="checkbox" data-id="{{ oid }}" 
-                                        data-name="{{ name_user }}" data-user="{{ user_ }}" data-active="{{ active }}" 
-                                        data-typeiduser="{{ user_type_oid }}" data-email="{{ user_email }}"
-                                        aria-expanded="false" {{#if status}} checked {{/if}}>
+                                        data-name="{{ nameUser }}" data-user="{{ user }}" data-active="{{ active }}" 
+                                        data-typeiduser="{{ typeUser }}" data-email="{{ userEmail }}" 
+                                        data-pass="{{ password }}" aria-expanded="false" {{#if status}} checked {{/if}}>
                                     
                                     <label>{{ active }}</label>
                                 </div>
                             </td>
                             <td> 
                                 <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm edit" 
-                                    data-id="{{ oid }}" data-name="{{ name_user }}" data-user="{{ user_ }}" 
-                                    data-active="{{ active }}" data-typeiduser="{{ user_type_oid }}"
-                                    data-email="{{ user_email }}">Editar</a>
+                                    data-id="{{ oid }}" data-name="{{ nameUser }}" data-user="{{ user }}" 
+                                    data-active="{{ active }}" data-typeiduser="{{ typeUser }}"
+                                    data-email="{{ userEmail }}" data-pass="{{ password }}">Editar</a>
                             </td>
                         </tr>
                     {{/each}}
@@ -61,11 +61,11 @@
                 <div class="modal-body">
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                        <input type="text" name="name_user" class="form-control userName" placeholder="Nombre" required>
+                        <input type="text" name="nameUser" class="form-control userName" placeholder="Nombre" required>
                     </div>
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" name="user_" class="form-control user" placeholder="Usuario" required>
+                        <input type="text" name="user" class="form-control user" placeholder="Usuario" required>
                     </div>
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
@@ -73,10 +73,10 @@
                     </div>
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="email" name="user_email" class="form-control email" placeholder="Correo" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                        <input type="email" name="userEmail" class="form-control email" placeholder="Correo" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     </div>
                     <div class="form-group">
-                        <select name="user_type_oid" class="form-select typeUser" data-show-content="true">
+                        <select name="typeUser" class="form-select typeUser" data-show-content="true">
                             <option value="0" data-content="<i class='fab fa-whatsapp fa-lg'></i>">Selecciona un tipo de usuario</option>
                             {{#each selected}}
                                 <option value="{{ oid }}">{{ description }}</option>
@@ -103,18 +103,18 @@
                 <div class="modal-body">
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                        <input type="text" name="name_user" class="form-control userName" placeholder="Nombre" required>
+                        <input type="text" name="nameUser" class="form-control userName" placeholder="Nombre" required>
                     </div>
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" name="user_" class="form-control user" placeholder="Usuario" required>
+                        <input type="text" name="user" class="form-control user" placeholder="Usuario" required>
                     </div>
                     <div class="form-group input-group pb-1">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="email" name="user_email" class="form-control email" placeholder="Correo" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                        <input type="email" name="userEmail" class="form-control email" placeholder="Correo" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     </div>
                     <div class="form-group p-1">
-                        <select name="user_type_oid" class="form-select typeUser">
+                        <select name="typeUser" class="form-select typeUser">
                             <option value="0">Selecciona un tipo de usuario</option>
                             {{#each selected}}
                                 <option value="{{ oid }}">{{ description }}</option>
@@ -131,8 +131,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="id" class="userId">
+                    <input type="hidden" name="oid" class="userId">
                     <input type="hidden" name="active" class="userActive">
+                    <input type="hidden" name="changePassword" class="changePassword">
+                    <input type="hidden" name="passwordUser" class="passwordUser">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary" id="updateArea">Actualizar</button>
                 </div>

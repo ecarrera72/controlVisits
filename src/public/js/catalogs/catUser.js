@@ -9,6 +9,7 @@ $(document).ready(function(){
         $('.userActive').val( status );
         $('.typeUser').val( $(this).data('typeiduser') );
         $('.email').val( $(this).data('email') );
+        $('.passwordUser').val( $(this).data('pass') );
     });
 
     $('#bntAdd').on('click', '', () => { $('#formAdd').trigger('reset'); });
@@ -20,13 +21,14 @@ $(document).ready(function(){
         tr.getElementsByTagName('label')[0].innerHTML = status;
 
         let data = {
-            id: $(this).data('id'),
-            name_user: $(this).data('name'),
-            user_: $(this).data('user'),
-            password: '',
+            oid: $(this).data('id'),
+            nameUser: $(this).data('name'),
+            user: $(this).data('user'),
+            password: $(this).data('pass'),
             active: status == 'Activo' ? 1 : 0,
-            user_type_oid: $(this).data('typeiduser'),
-            user_email: $(this).data('email')
+            typeUser: $(this).data('typeiduser'),
+            userEmail: $(this).data('email'),
+            changePassword: false
         }
 
         $.post( '/catalogs/user/update', data);
@@ -36,5 +38,6 @@ $(document).ready(function(){
         let val = false
         $(this).is(':checked') ? val = true : $('.passwd').val('');
         $('.passwd').prop('required', val);
+        $('.changePassword').val( val );
     });
 });

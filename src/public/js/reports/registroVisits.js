@@ -2,14 +2,13 @@ $(document).ready(function () {
 
     let confiDatepicker = {
         //formatter: (input, date, instance) => { input.value = strftime('%d-%m-%Y', date)},
-        formatter: (input, date, instance) => { input.value = strftime('%Y-%m-%d', date)},
+        formatter: (input, date, instance) => { input.value = strftime('%d-%m-%Y', date)},
         customMonths: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        customDays: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa']
+        customDays: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+        dateSelected: new Date()
     }
 
     datepicker('#toDatePicker', confiDatepicker);
-
-    confiDatepicker.dateSelected = new Date();
     datepicker('#fromDatePicker', confiDatepicker);
 
     $('#btnFilter').on('click', function () {
@@ -23,17 +22,17 @@ $(document).ready(function () {
     });    
     
     $('#tbl').on('dbl-click-row.bs.table', function(row, $element, field) {
-        document.getElementById('name').innerHTML = $element.nombre;
-        document.getElementById('gender').innerHTML = $element.gender == 'M' ? 'Masculino' : 'Femenino';
-        document.getElementById('visit').innerHTML = $element.visit_subject;
-        document.getElementById('document').innerHTML = $element.typeDoc;
-        document.getElementById('area').innerHTML = $element.area;
+        document.getElementById('name').innerHTML = $element.pcNombreCompleto;
+        document.getElementById('gender').innerHTML = $element.peGender == 'M' ? 'Masculino' : 'Femenino';
+        document.getElementById('visit').innerHTML = $element.vrVisitSubject;
+        document.getElementById('document').innerHTML = $element.dtDescription;
+        document.getElementById('area').innerHTML = $element.arDescription;
         document.getElementById('employee').innerHTML = $element.is_employee == '1' ? 'Si' : 'No';
         document.getElementById('visitant').innerHTML = $element.typeVisit;
-        document.getElementById('entryDate').innerHTML = $element.visit_check_date;
-        document.getElementById('departureDate').innerHTML = $element.visit_exit_date;
+        document.getElementById('entryDate').innerHTML = $element.vrVisitCheckDate;
+        document.getElementById('departureDate').innerHTML = $element.vrVisitExitDate;
 
-        $.get('/reports/visits/imgDocuments', { oidPerson: $element.oid_person }).done( (data) => {
+        $.get('/reports/visits/imgDocuments', { oidPerson: $element.pcPersonOid }).done( (data) => {
             $('#imgPhoto').empty().append(`
                 <img src="data:image/jpeg;base64,`+ data.photo +`" class="shadow rounded-circle img-fluid img-thumbnail">
             `);
@@ -52,7 +51,7 @@ $(document).ready(function () {
 });
 
 function queryParams(params) {
-    params.fromDate = $('#fromDatePicker').val();
-    params.toDate = $('#toDatePicker').val();
+    params.visitCheckDateIni = $('#fromDatePicker').val();
+    params.visitCheckDateFin = $('#toDatePicker').val();
     return params
 }
