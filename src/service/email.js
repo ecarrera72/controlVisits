@@ -36,10 +36,9 @@ async function mail(message) {
         }
     }
 
-    message.from = 'Aztek Control y Automatizacion <{$settings.mail}>'
+    message.from = `Aztek Control y Automatizacion <${settings.mail}>`
 
     let info = await transport.sendMail( message );
-    console.log(info);
 
 }
 

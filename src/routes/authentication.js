@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const crypto = require('crypto');
 const { generate } = require('generate-password');
-const { connectiondb } = require('../database');
+//const { connectiondb } = require('../database');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
 const { mail } = require('../service/email');
 const { getDataParams, postData } = require('../service/api');
@@ -68,19 +68,26 @@ router.get('/forgot', isNotLoggedIn, (req, res) => {
 
 router.post('/forgot', isNotLoggedIn, async (req, res) => {
     const response = await getDataParams('user/user-name/', req.body.username);
-    console.log(response.data.response);
-    console.log((response.data.response).length);
-    //const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
     const rows = response.data.response;
-
 
     if (rows.length > 0) {
         const password = generate({ length: 10, numbers: true });
-        //const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
+        
+        rows[0].password = crypto.createHash('md5').update(password).digest('hex');;
+        delete  rows[0].creationTimestamp;
 
-        // if (update.affectedRows == 1 ) {
-        //     await mail({ to: rows[0].user_email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
-        // }
+        const update = await postData('user/create/', rows[0]);
+
+        if ( update.data.code == 0 ) {
+            await mail(
+                { 
+                    to: rows[0].userEmail,
+                    subject: 'Recuperacion de Contraseña',
+                    template: 'forgot',
+                    context: { password }
+                }
+            );
+        }
         
         req.flash('success', 'Se envio contraseña al correo registrado');
         res.redirect('/signin');
