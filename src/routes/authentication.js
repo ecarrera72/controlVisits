@@ -6,7 +6,7 @@ const { generate } = require('generate-password');
 const { connectiondb } = require('../database');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
 const { mail } = require('../service/email');
-const { getData, postData } = require('../service/api');
+const { getDataParams, postData } = require('../service/api');
 
 router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('auth/signup');
@@ -67,14 +67,20 @@ router.get('/forgot', isNotLoggedIn, (req, res) => {
 });
 
 router.post('/forgot', isNotLoggedIn, async (req, res) => {
-    const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
+    const response = await getDataParams('user/user-name/', req.body.username);
+    console.log(response.data.response);
+    console.log((response.data.response).length);
+    //const rows = await (await connectiondb()).query('SELECT * FROM user WHERE user_ = ?', [req.body.username]);
+    const rows = response.data.response;
+
+
     if (rows.length > 0) {
         const password = generate({ length: 10, numbers: true });
-        const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
+        //const update = await (await connectiondb()).query('UPDATE user SET password = MD5(?) WHERE oid = ?', [password, rows[0].oid]);
 
-        if (update.affectedRows == 1 ) {
-            await mail({ to: rows[0].user_email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
-        }
+        // if (update.affectedRows == 1 ) {
+        //     await mail({ to: rows[0].user_email, subject: 'Recuperar Contraseña', template: 'forgot', context: { password }});   
+        // }
         
         req.flash('success', 'Se envio contraseña al correo registrado');
         res.redirect('/signin');

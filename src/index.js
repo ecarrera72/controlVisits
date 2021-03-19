@@ -4,9 +4,9 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session');
+//const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
-const { dbSettings } = require('./sqlite');
+//const { dbSettings } = require('./sqlite');
 
 
 // Initializations
