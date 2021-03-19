@@ -1,9 +1,9 @@
 const sqlite = require('sqlite3').verbose()
-const { join} = require('path');
+const { join } = require('path');
 
-const db = new sqlite.Database(join(__dirname, 'dbSqlite', 'configuration.db'), (err) => {
+const db = new sqlite.Database(join(__dirname, '..', 'dbSqlite', 'configuration.db'), (err) => {
     if (err) console.error(err);
-    console.log('Sqlite is Connected.');
+    else console.log('Sqlite is Connected.');
 });
 
 const queries = {

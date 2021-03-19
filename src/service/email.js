@@ -1,6 +1,6 @@
 const { createTransport } = require('nodemailer');
 const { join } = require('path');
-const { emailSettings } = require('../sqlite');
+const { emailSettings } = require('../database/sqlite');
 const hbs = require('nodemailer-express-handlebars');
 
 let transport = null;

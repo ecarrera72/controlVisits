@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { apiSettings } = require('../sqlite');
+const { apiSettings } = require('../database/sqlite');
 
 let settings = null;
 
