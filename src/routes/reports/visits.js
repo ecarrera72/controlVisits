@@ -11,7 +11,6 @@ router.get('/', isloggedIn, async (req, res) => {
 
 router.get('/info', isloggedIn, async (req, res) => {
     delete req.query.search
-    console.log(req.query);
     try {
         let response = null;
 
