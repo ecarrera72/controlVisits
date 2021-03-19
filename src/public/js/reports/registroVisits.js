@@ -1,8 +1,7 @@
 $(document).ready(function () {
 
     let confiDatepicker = {
-        //formatter: (input, date, instance) => { input.value = strftime('%d-%m-%Y', date)},
-        formatter: (input, date, instance) => { input.value = strftime('%d-%m-%Y', date)},
+        formatter: (input, date, instance) => { input.value = strftime('%d/%m/%Y', date)},
         customMonths: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         customDays: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
         dateSelected: new Date()
@@ -23,12 +22,13 @@ $(document).ready(function () {
     
     $('#tbl').on('dbl-click-row.bs.table', function(row, $element, field) {
         document.getElementById('name').innerHTML = $element.pcNombreCompleto;
+        document.getElementById('visit').innerHTML = $element.peNombreCompleto;
         document.getElementById('gender').innerHTML = $element.peGender == 'M' ? 'Masculino' : 'Femenino';
-        document.getElementById('visit').innerHTML = $element.vrVisitSubject;
+        document.getElementById('subject').innerHTML = $element.vrVisitSubject;
         document.getElementById('document').innerHTML = $element.dtDescription;
         document.getElementById('area').innerHTML = $element.arDescription;
         document.getElementById('employee').innerHTML = $element.is_employee == '1' ? 'Si' : 'No';
-        document.getElementById('visitant').innerHTML = $element.typeVisit;
+        document.getElementById('visitant').innerHTML = $element.vtDescription;
         document.getElementById('entryDate').innerHTML = $element.vrVisitCheckDate;
         document.getElementById('departureDate').innerHTML = $element.vrVisitExitDate;
 
@@ -38,11 +38,11 @@ $(document).ready(function () {
             `);
 
             $('#imgFront').empty().append(`
-                <img src="data:image/jpeg;base64,`+ data.document_front +`" class="shadow rounded img-fluid img-thumbnail imgDocs">
+                <img src="data:image/jpeg;base64,`+ data.documentFront +`" class="shadow rounded img-fluid img-thumbnail imgDocs">
             `);
 
             $('#imgBack').empty().append(`
-                <img src="data:image/jpeg;base64,`+ data.document_back +`" class="shadow rounded img-fluid img-thumbnail imgDocs">
+                <img src="data:image/jpeg;base64,`+ data.documentBack +`" class="shadow rounded img-fluid img-thumbnail imgDocs">
             `);
         });
 

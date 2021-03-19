@@ -46,6 +46,7 @@ async function main() {
     app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
+   
 
     // Global variables
     app.use((req, res, next) => {
