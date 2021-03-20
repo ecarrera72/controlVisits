@@ -63,3 +63,20 @@ body {
 .imgDocs {
     filter: blur(2px);
 }
+
+.page-item {
+    text-align: center;
+    width: 4.5rem;
+}
+
+div.input-group.page-jump-to {
+    width: 10rem;
+}
+
+li.page-item.page-last-separator.disabled{
+    display: none;
+}
+
+li.page-item.page-first-separator.disabled{
+    display: none;
+}

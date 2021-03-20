@@ -43,6 +43,9 @@
                 data-export-types = "['xml', 'csv', 'excel', 'xlsx', 'pdf']"
                 data-loading-template="<i class='fa fa-spinner fa-spin fa-fw fa-2x'></i>"
 
+                data-pagination-successively-size="1"
+                data-pagination-pages-by-side="0"
+
                 data-method="GET"
                 data-url="/reports/visits/info"
 
@@ -56,9 +59,9 @@
                         <th data-field="dtDescription" data-sortable="true">Documento</th>
                         <th data-field="vrVisitCheckDate" data-sortable="true">Fecha entrada</th>
                         <th data-field="vrVisitExitDate" data-sortable="true">Fecha salida</th>
-                        <th data-field="peGender" data-visible="false" data-print-ignore="true">Genero</th>
-                        <th data-field="vtDescription" data-visible="false" data-print-ignore="true">Tipo Visita</th>
-                        <th data-field="pcPersonOid" data-visible="false" data-print-ignore="true">Person</th>
+                        <th data-field="peGender" data-visible="false" data-print-ignore="true" data-switchable="false">Genero</th>
+                        <th data-field="vtDescription" data-visible="false" data-print-ignore="true" data-switchable="false">Tipo Visita</th>
+                        <th data-field="pcPersonOid" data-visible="false" data-print-ignore="true" data-switchable="false">Person</th>
                     </tr>
                 </thead>
             </table>
