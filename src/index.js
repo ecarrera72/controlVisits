@@ -7,6 +7,7 @@ const session = require('express-session');
 //const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
 //const { dbSettings } = require('./sqlite');
+const favicon = require('express-favicon');
 
 
 // Initializations
@@ -46,6 +47,7 @@ async function main() {
     app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(favicon(path.join( __dirname, 'public', 'img', 'favicon.ico' )));
    
 
     // Global variables
@@ -62,6 +64,7 @@ async function main() {
     app.use('/catalogs/area', require('./routes/catalogs/area'));
     app.use('/catalogs/document', require('./routes/catalogs/document'));
     app.use('/catalogs/user', require('./routes/catalogs/user'));
+    app.use('/catalogs/employee', require('./routes/catalogs/employee'));
     app.use('/reports/visits', require('./routes/reports/visits'));
 
     // Public
