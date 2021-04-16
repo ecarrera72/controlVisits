@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand animate__animated animate__lightSpeedInLeft" href="/">Control Visitas</a>
+    <a class="navbar-brand animate__animated animate__lightSpeedInLeft" href="/">Cotizaciones</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,7 +17,7 @@
           </a>
         </li>
         {{#if user}}
-          <li class="nav-item dropdown">
+          {{!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Catalogos
             </a>
@@ -38,6 +38,13 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="/reports/visits">Registro visitas</a></li>
             </ul>
+          </li> --}}
+          <li class="nav-item">
+            <a class="btn btn-success btn-sm ml-3" href="/shop/shoppingCart">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="badge badge-light">3</span>
+            </a>
+            {{!-- <a href="/shop/shoppingCart" class="nav-link"><i class="fa fa-shopping-cart"></i></a> --}}
           </li>
           <li class="nav-item">
             <a href="/profile" class="nav-link">Perfil</a>

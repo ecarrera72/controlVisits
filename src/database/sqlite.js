@@ -13,7 +13,7 @@ const queries = {
     
     settingsemail: `SELECT mail, password, host, port FROM mailSettings`,
 
-    settingsApi: `SELECT host, port, path FROM apiRestSettings WHERE status = 1`
+    settingsApi: `SELECT host, port FROM apiRestSettings WHERE status = 1`
 }
 
 async function dbSettings() {

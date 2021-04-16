@@ -8,29 +8,69 @@ async function getSetting() {
     return settings;
 }
 
-async function getData(entity) {
-    const resSettings = await getSetting();
-    return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`);
-}
+async function apiRest(metod, entity, data = null, params = null, token = null) {
+    await getSetting();
 
-async function getDataParams(entity, params) {
-    const resSettings = await getSetting();
-    return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}/${params}`);
-}
+    let config = {
+        method: metod,
+        url: `${settings.host}:${settings.port}/${entity}`
+    };
 
-async function getDataObject(entity, object) {
-    const resSettings = await getSetting();
-    return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`, { data: object });
-}
+    if ( data ) {
+        config.data = data;
+    }
 
-async function postData(entity, objetc) {
-    const resSettings = await getSetting();
-    return await axios.post(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`, objetc);
-}
+    if ( params ) {
+        config.params = params;
+    }
+    
+    if ( token ) {
+        config.headers = { 
+            'Content-Type': 'application/json',
+            'Authorization': `${token.tokenType} ${token.accessToken}`
+        }
+    }
+
+    return await axios( config );
+
+};
+
+async function getAuth() {
+    try {
+        return await apiRest( 'post', 'authToken', { cusu_user: 'tuga', cusu_pass: 'secretToken' } );
+    } catch (error) {
+        console.error(error);
+    }    
+};
+
+// async function getData(entity) {
+//     const resSettings = await getSetting();
+//     return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`);
+// }
+
+// async function getDataParams(entity, params) {
+//     const resSettings = await getSetting();
+//     return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}/${params}`);
+// }
+
+// async function getDataObject(entity, object) {
+//     const resSettings = await getSetting();
+//     return await axios.get(`${resSettings.host}:${resSettings.port}/${resSettings.path}/${entity}`, { data: object });
+// }
+
+// async function postData(entity, objetc) {
+//     await getSetting();
+//     return await axios.post(`${settings.host}:${settings.port}/${entity}`, objetc);
+// }
 
 module.exports = {
-    getData,
-    getDataParams,
-    getDataObject,
-    postData
+    apiRest,
+    getAuth
 }
+
+// module.exports = {
+//     getData,
+//     getDataParams,
+//     getDataObject,
+//     postData
+// }

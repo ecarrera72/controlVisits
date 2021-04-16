@@ -1,12 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const crypto = require('crypto');
-const { generate } = require('generate-password');
-//const { connectiondb } = require('../database/database');
+const { apiRest } = require('../service/api');
 const { isloggedIn, isNotLoggedIn } = require('../lib/auth');
+const { generate } = require('generate-password');
 const { mail } = require('../service/email');
-const { getDataParams, postData } = require('../service/api');
+const passport = require('passport');
+const express = require('express');
+const crypto = require('crypto');
+const router = express.Router();
 
 router.get('/signup', isNotLoggedIn, (req, res) => {
     res.render('auth/signup');
@@ -42,7 +41,7 @@ router.post('/profile', isloggedIn, async (req, res) => {
     }
 
     try {
-        await postData('user/create/', req.body)
+        await apiRest('user/create/', req.body)
         req.flash('success', 'Usuario actualizado correctamente.');
         res.redirect('/');
     } catch (error) {
@@ -67,7 +66,7 @@ router.get('/forgot', isNotLoggedIn, (req, res) => {
 });
 
 router.post('/forgot', isNotLoggedIn, async (req, res) => {
-    const response = await getDataParams('user/user-name/', req.body.username);
+    const response = await apiRest('user/user-name/', req.body.username);
     const rows = response.data.response;
 
     if (rows.length > 0) {
@@ -76,7 +75,7 @@ router.post('/forgot', isNotLoggedIn, async (req, res) => {
         rows[0].password = crypto.createHash('md5').update(password).digest('hex');;
         delete  rows[0].creationTimestamp;
 
-        const update = await postData('user/create/', rows[0]);
+        const update = await apiRest('user/create/', rows[0]);
 
         if ( update.data.code == 0 ) {
             await mail(

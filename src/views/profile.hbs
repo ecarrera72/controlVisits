@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4 mx-auto">
             <div class="card text-center">
-                <h3>{{ user.nameUser }}</h3>
+                <h3>{{ user.cusu_user }}</h3>
             </div>
         </div>
     </div>
@@ -18,17 +18,13 @@
                     </div>
                     <div class="p-2">
                         <form class="row g-3 needs-validation" action="/profile" method="POST">
-                            <div class="col-md-6 position-relative input-group">
-                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                <input type="text" class="form-control" name="nameUser" placeholder="Nombre Completo" value="{{ user.nameUser }}" required autofocus>
-                            </div>
                             <div class="col-md-4 position-relative input-group">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" name="user" placeholder="Usuario" value="{{ user.user }}" required>
+                                <input type="text" class="form-control" name="user" placeholder="Usuario" value="{{ user.cusu_user }}" required>
                             </div>
                             <div class="col-md-4 position-relative input-group" for="contactEmail">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control" name="userEmail" placeholder="Email" value="{{ user.userEmail }}" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                                <input type="email" class="form-control" name="userEmail" placeholder="Email" value="{{ user.cusu_mail }}" pattern="[a-z0-9._@+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                             </div>
                             {{!-- <div class="col-md-4 position-relative input-group">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -46,9 +42,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
                                 <a href="/" class="btn btn-danger btn-lg">Cancelar</a>
                             </div>
-                            <input type="hidden" name="oid" value="{{ user.oid }}">
-                            <input type="hidden" name="typeUser" value="{{ user.typeUser }}">
-                            <input type="hidden" name="active" value="{{ user.active }}">
+                            <input type="hidden" name="oid" value="{{ user.cusu_id }}">
                             <input type="hidden" name="passUser" value="{{ user.password }}">
                         </form>
                     </div>

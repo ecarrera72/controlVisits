@@ -1,20 +1,18 @@
+const exphbs = require('express-handlebars');
+//const favicon = require('express-favicon');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
 const express = require('express');
 const morgan = require('morgan');
-const exphbs = require('express-handlebars');
 const path = require('path');
-const flash = require('connect-flash');
-const session = require('express-session');
-//const MySQLStore = require('express-mysql-session');
-const passport = require('passport');
-//const { dbSettings } = require('./sqlite');
-const favicon = require('express-favicon');
+const { getAuth } = require('./service/api');
 
-
-// Initializations
 const app = express();
 
 async function main() {
     require('./lib/passport');
+    const token = await getAuth();
 
     // Settings
     app.set('port', process.env.PORT || 3000);
@@ -28,18 +26,10 @@ async function main() {
     }));
     app.set('view engine', '.hbs');
 
-    // Middlewares
-    // app.use(session({ 
-    //     secret: 'aztekmysql',
-    //     resave: false,
-    //     saveUninitialized: false,
-    //     store: new MySQLStore(await dbSettings())
-    // }));
     app.use(session({ 
         secret: 'secureAztek',
         resave: false,
         saveUninitialized: false
-        //cookie: { maxAge: 3600000 }
     }));
     app.use(flash());
     app.use(morgan('dev'));
@@ -47,14 +37,14 @@ async function main() {
     app.use(express.json());
     app.use(passport.initialize());
     app.use(passport.session());
-    app.use(favicon(path.join( __dirname, 'public', 'img', 'favicon.ico' )));
+    //app.use(favicon(path.join( __dirname, 'public', 'img', 'shopIco.png' )));
    
-
     // Global variables
     app.use((req, res, next) => {
         app.locals.success = req.flash('success');
         app.locals.message = req.flash('message');
         app.locals.user = req.user;
+        app.locals.token = token.data;
         next();
     });
 
@@ -66,6 +56,7 @@ async function main() {
     app.use('/catalogs/user', require('./routes/catalogs/user'));
     app.use('/catalogs/employee', require('./routes/catalogs/employee'));
     app.use('/reports/visits', require('./routes/reports/visits'));
+    app.use('/shop/shoppingCart', require('./routes/shop/shoppingCart'));
 
     // Public
     app.use(express.static(path.join(__dirname, 'public')));

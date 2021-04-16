@@ -5,7 +5,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
-    background: url('/img/back.jpg');
+    background: url('https://demos.creative-tim.com/paper-kit-pro-react/static/media/pk-pro-cover.7998942a.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -79,4 +79,18 @@ li.page-item.page-last-separator.disabled{
 
 li.page-item.page-first-separator.disabled{
     display: none;
+}
+
+.product_view .modal-dialog{
+    max-width: 800px;
+    width: 100%;
+}
+
+.pre-cost{
+    text-decoration: line-through;
+    color: #a5a5a5;
+}
+
+.space-ten{
+    padding: 10px 0;
 }
