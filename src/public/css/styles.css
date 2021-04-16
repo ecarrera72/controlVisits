@@ -4,7 +4,6 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
     background: url('https://demos.creative-tim.com/paper-kit-pro-react/static/media/pk-pro-cover.7998942a.jpg');
     background-position: center center;
     background-repeat: no-repeat;

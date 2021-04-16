@@ -1,7 +1,7 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
-const { apiRest } = require('../service/api');
+const { apiRest, getAuth } = require('../service/api');
 
 passport.use('local.signin', new localStrategy({
     usernameField: 'user',
@@ -14,10 +14,15 @@ passport.use('local.signin', new localStrategy({
     try {
         response = await apiRest( 'get', 'login', data, null, req.app.locals.token);
     } catch (error) {
-        console.error(error.response);
-        switch (error.response.status) {
+        console.error(error);
+        switch (error.status) {
             case 404:
                 response = { data: null }    
+                break;
+            case 401:
+                token = await getAuth();
+                req.app.locals.token = token.data;
+                res.redirect('..');
                 break;
             default:
                 break;

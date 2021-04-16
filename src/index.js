@@ -57,6 +57,7 @@ async function main() {
     app.use('/catalogs/employee', require('./routes/catalogs/employee'));
     app.use('/reports/visits', require('./routes/reports/visits'));
     app.use('/shop/shoppingCart', require('./routes/shop/shoppingCart'));
+    app.use('/shop/shopping', require('./routes/shop/shopping'));
 
     // Public
     app.use(express.static(path.join(__dirname, 'public')));
