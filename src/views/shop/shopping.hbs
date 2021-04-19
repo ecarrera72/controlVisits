@@ -1,106 +1,100 @@
-<section class="jumbotron text-center">
+{{!-- <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Tienda Aztek</h1>
+        <h1 class="jumbotron-heading titulo-tienda">Tienda Aztek</h1>
         <p class="lead text-muted mb-0"></p>
     </div>
-</section>
+</section> --}}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="category.html">Categoria</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Sub-categoria</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
+<svg viewbox="-45 0 200 15">
+    <defs>
+        <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="10%" stop-color="#326384"/>
+            <stop offset="90%" stop-color="#123752"/>
+        </linearGradient>
+        <pattern id="wave" x="0" y="0" width="120" height="20" patternUnits="userSpaceOnUse">
+            <path id="wavePath" d="M-40 9 Q-30 7 -20 9 T0 9 T20 9 T40 9 T60 9 T80 9 T100 9 T120 9 V20 H-40z" mask="url(#mask)" fill="url(#gradient)"> 
+                <animateTransform
+                    attributeName="transform"
+                    begin="0s"
+                    dur="1.5s"
+                    type="translate"
+                    from="0,0"
+                    to="40,0"
+                    repeatCount="indefinite" />
+            </path>
+        </pattern>
+    </defs>
+    <text text-anchor="middle" x="50" y="12" font-size="10" fill="url(#wave)"  fill-opacity="0.6">TIENDA AZTEK</text>
+    <text text-anchor="middle" x="50" y="12" font-size="10" fill="url(#gradient)" fill-opacity="0.1">TIENDA AZTEK</text>
+</svg>
 
 <div class="container">
     <div class="row">
         <div class="col-12 col-sm-3">
-            <div class="card bg-light mb-3">
-                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Categorias</div>
-                <ul class="list-group category_block">
-                    {{#each categories}}
-                        <li class="list-group-item"><a href="{{ cart_t_id }}">{{ cart_t_descripcion }}</a></li>
-                    {{/each}}
-                </ul>
-            </div>
-            {{!-- <div class="card bg-light mb-3">
-                <div class="card-header bg-success text-white text-uppercase">Last product</div>
-                <div class="card-body">
-                    <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff" />
-                    <h5 class="card-title">Product title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <p class="bloc_left_price">99.00 $</p>
+            <div class="mb-3 text-uppercase sticky-top">
+                <div class="dropdown d-grid gap-2">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="Menu" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorias
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="Menu">
+                        {{#each categories}}                        
+                            <a class="dropdown-item" href="/shop/shopping/{{ cart_t_id }}">
+                                {{ cart_t_descripcion }}
+                            </a>
+                        {{/each}}
+                        <a class="dropdown-item" href="/shop/shopping/0">TODO</a>
+                    </ul>
                 </div>
-            </div> --}}
+            </div>
         </div>
         <div class="col">
             <div class="row">
                 {{#each articles}}
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="card">
-                            {{#if articuloIMG}}
-                                <img class="card-img-top" src="data:img/*;base64,{{ articuloIMG }}">
-                            {{else}}
-                                <img class="card-img-top" src="http://www.sieparking.com.mx/wp-content/uploads/2018/01/Aztek-Automatizacion-logo-vectores-1.5cm-largo.png">
-                            {{/if}}
+                            <div class="card-header">
+                                {{#if articuloIMG}}
+                                    <img class="card-img-top" src="data:img/*;base64,{{ articuloIMG }}" height="125px">
+                                {{else}}
+                                    <img class="card-img-top" src="http://www.sieparking.com.mx/wp-content/uploads/2018/01/Aztek-Automatizacion-logo-vectores-1.5cm-largo.png" height="125px">
+                                {{/if}}
+                            </div>
                             <div class="card-body">
-                                <h4 class="card-title"><a href="product.html" title="View Product">{{ cart_descripcion_corta }}</a></h4>
-                                <p class="card-text">{{ cart_descripcion }}</p>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="btn btn-danger btn-block">$ {{ cart_precio_1 }} </p>
-                                    </div>
-                                    <div class="col">
-                                        <a href="#" class="btn btn-success btn-block">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </a>
-                                    </div>
+                                <h4 class="card-title">{{ cart_descripcion_corta }}</h4>
+                                <p class="card-body">{{ cart_descripcion }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-grid gap-2">
+                                    <p class="btn btn-secondary active pe-none">$ {{ cart_precio_1 }} </p>
+                                </div>
+                                <div class="col d-grid gap-2">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {{/each}}                
-                {{!-- <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <div class="col-12">
-                    <nav aria-label="...">
-                        <ul class="pagination mt-3">
-                            <li class="page-item">
-                                <a class="page-link" href="#" tabindex="-1">Previo</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Proximo</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                {{/each}}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-end mt-3">
+                        <li class="page-item">
+                            <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
