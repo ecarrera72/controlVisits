@@ -46,6 +46,10 @@
                     </ul>
                 </div>
             </div>
+            <form class="d-flex mb-3">
+                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                {{!-- <button class="btn btn-outline-primary" type="submit">Buscar</button> --}}
+            </form>
         </div>
         <div class="col">
             <div class="row">
@@ -54,9 +58,9 @@
                         <div class="card">
                             <div class="card-header">
                                 {{#if articuloIMG}}
-                                    <img class="card-img-top" src="data:img/*;base64,{{ articuloIMG }}" height="125px">
+                                    <img class="card-img-top" src="data:img/*;base64,{{ articuloIMG }}" height="150px">
                                 {{else}}
-                                    <img class="card-img-top" src="http://www.sieparking.com.mx/wp-content/uploads/2018/01/Aztek-Automatizacion-logo-vectores-1.5cm-largo.png" height="125px">
+                                    <img class="card-img-top" src="http://www.sieparking.com.mx/wp-content/uploads/2018/01/Aztek-Automatizacion-logo-vectores-1.5cm-largo.png" height="150px">
                                 {{/if}}
                             </div>
                             <div class="card-body">

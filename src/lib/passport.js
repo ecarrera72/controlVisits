@@ -14,8 +14,8 @@ passport.use('local.signin', new localStrategy({
     try {
         response = await apiRest( 'get', 'login', data, null, req.app.locals.token);
     } catch (error) {
-        console.error(error);
-        switch (error.status) {
+        console.error(error.response);
+        switch (error.response.status) {
             case 404:
                 response = { data: null }    
                 break;

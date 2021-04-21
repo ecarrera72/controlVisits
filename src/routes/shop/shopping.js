@@ -14,15 +14,23 @@ router.get( "/:idCategory/",  isloggedIn, async ( req, res ) => {
         // console.log( parseInt(articles.data.total / articles.data.size) + 1 );
         res.render('shop/shopping', { articles: articles.data.items, categories: categories.data });
     } catch (error) {
-        console.error(error.response);
+        console.error(error.response.status);
+        console.error(error.response.statusText);
+        console.error(error.response.data);
         switch (error.response.status) {
             case 404:
                 response = { data: null }
                 break;
             case 401:
+                console.log('Token anterior');
+                console.log(req.app.locals.token);
                 token = await getAuth();
+                console.log('Token nuevo');
+                console.log(token.data);
                 req.app.locals.token = token.data;
-                res.redirect('..');
+                console.log('Token veremos si cambio');
+                console.log(req.app.locals.token);
+                //res.redirect('/');
                 break;
             default:
                 break;
