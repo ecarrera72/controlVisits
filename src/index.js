@@ -45,6 +45,7 @@ async function main() {
         app.locals.message = req.flash('message');
         app.locals.user = req.user;
         app.locals.token = token.data;
+        app.locals.cartAmount = { count: 0 };
         next();
     });
 

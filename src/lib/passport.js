@@ -30,6 +30,13 @@ passport.use('local.signin', new localStrategy({
     }
     if (response.data !== null) {
         const user = response.data;
+
+        countCart = await apiRest( 'get', 'cart/count/', null, { idUser: user.cusu_id }, req.app.locals.token);
+        console.log(countCart.data);
+        console.log(req.app.locals.cartAmount);
+        req.app.locals.cartAmount = countCart.data;
+        console.log(req.app.locals.cartAmount);
+        
         done(null, user, req.flash('success', 'Bienvenido ' + user.cusu_user));
     } else {
         done(null, false, req.flash('message', 'Usuario y/o Contaseña Incorrecto.'));

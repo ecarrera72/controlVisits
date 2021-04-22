@@ -1,5 +1,5 @@
-const { isloggedIn } = require('../../lib/auth');
 const { apiRest, getAuth } = require('../../service/api');
+const { isloggedIn } = require('../../lib/auth');
 const express = require('express');
 const router = express.Router();
 
