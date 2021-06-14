@@ -22,7 +22,7 @@ passport.use('local.signin', new localStrategy({
             case 401:
                 token = await getAuth();
                 req.app.locals.token = token.data;
-                res.redirect('..');
+                res.redirect('/');
                 break;
             default:
                 break;

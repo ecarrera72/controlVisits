@@ -30,7 +30,7 @@ router.get( "/:idCategory/",  isloggedIn, async ( req, res ) => {
                 req.app.locals.token = token.data;
                 console.log('Token veremos si cambio');
                 console.log(req.app.locals.token);
-                //res.redirect('/');
+                res.redirect('/');
                 break;
             default:
                 break;

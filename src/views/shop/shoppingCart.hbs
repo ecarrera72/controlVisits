@@ -12,7 +12,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col"> </th>
+                            <th scope="col"></th>
                             <th scope="col">Producto</th>
                             <th scope="col" class="text-center">Cantidad</th>
                             <th scope="col" class="text-right">Precio</th>
@@ -20,46 +20,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>TPV</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">124,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">33,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td><input class="form-control" type="text" value="1"/></td>
-                            <td class="text-right">70,00 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Sub-Total</td>
-                            <td class="text-right">255,90 €</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Shipping</td>
-                            <td class="text-right">6,90 €</td>
-                            <td></td>
-                        </tr>
+                        {{#each cart}}
+                            <tr>
+                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                                <td>TPV</td>
+                                <td><input class="form-control" type="number" value="{{ amount }}" /></td>
+                                <td class="text-right">$ {{ total_price }}</td>
+                                <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                            </tr>
+                        {{/each}}
                         <tr>
                             <td></td>
                             <td></td>
                             <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
+                            <td class="text-right"><strong>$ {{ cartTotal }}</strong></td>
                             <td></td>
                         </tr>
                     </tbody>

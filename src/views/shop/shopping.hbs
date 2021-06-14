@@ -52,7 +52,7 @@
             </form>
         </div>
         <div class="col">
-            <div class="row">
+            <div class="row" id="divArticles">
                 {{#each articles}}
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="card">
@@ -72,7 +72,7 @@
                                     <p class="btn btn-secondary active pe-none">$ {{ cart_precio_1 }} </p>
                                 </div>
                                 <div class="col d-grid gap-2">
-                                    <button class="btn btn-primary">
+                                    <button class="btn btn-primary" data-id="{{ cart_id }}" data-price="{{ cart_precio_1 }}">
                                         <i class="fa fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -103,3 +103,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/shop/shopping.js"></script>
